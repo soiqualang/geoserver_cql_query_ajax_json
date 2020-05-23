@@ -28,21 +28,21 @@
     <div class="form-group">
       <label for="shbando">Số tờ:</label>
       <select class="form-control" id="shbando">
-        <option>--Chọn số tờ--</option>
-        <option>10</option>
-        <option>11</option>
-        <option>12</option>
-        <option>13</option>
+        <option value="none">--Chọn số tờ--</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
       </select>
     </div>
     <div class="form-group">
       <label for="shthua">Số thửa:</label>
       <select class="form-control" id="shthua">
-        <option>--Chọn số thửa--</option>
-        <option>15</option>
-        <option>16</option>
-        <option>17</option>
-        <option>18</option>
+        <option value="none">--Chọn số thửa--</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
       </select>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
@@ -60,7 +60,11 @@ shthua_dk='%20AND%20shthua=15'; */
 
 $("#shbando").change(function(){
   var shbando=$("#shbando").val();
-  shbando_dk='%20AND%20shbando='+shbando;
+  if(shbando!='none'){
+    shbando_dk='%20AND%20shbando='+shbando;    
+  }else{
+    shbando_dk='%20AND%201=1';
+  }
   
   thuadat_serv='http://dev.dothanhlong.org:8080/geoserver/thuadat/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=thuadat:view_duynghia_4326&maxFeatures=50&CQL_FILTER=1=1'+shbando_dk+''+shthua_dk+'&outputFormat=application/json';
   thuadat_serv='proxy.php?url='+encodeURIComponent(thuadat_serv);
@@ -69,7 +73,12 @@ $("#shbando").change(function(){
 });
 $("#shthua").change(function(){
     var shthua=$("#shthua").val();
-    shthua_dk='%20AND%20shthua='+shthua;   
+    if(shthua!='none'){
+        shthua_dk='%20AND%20shthua='+shthua;
+    }else{
+        shthua_dk='%20AND%201=1';
+    }
+    
     
     thuadat_serv='http://dev.dothanhlong.org:8080/geoserver/thuadat/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=thuadat:view_duynghia_4326&maxFeatures=50&CQL_FILTER=1=1'+shbando_dk+''+shthua_dk+'&outputFormat=application/json';
     thuadat_serv='proxy.php?url='+encodeURIComponent(thuadat_serv);
